@@ -128,15 +128,7 @@ Tests run with LiteSVM (no local validator needed).
 ![All tests passing](./week2_escrow_tests_success.png)
 
 ```
-running 3 tests
-test test_take_fails_when_expired ... ok
-test test_make_and_refund ... ok
-test test_make_update_and_take ... ok
-
-test result: ok. 3 passed; 0 failed
 ```
-
----
 
 ## Notes
 
