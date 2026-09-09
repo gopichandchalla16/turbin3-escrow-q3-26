@@ -3,22 +3,12 @@ pub mod error;
 pub mod instructions;
 pub mod state;
 
-use anchor_lang::prelude::*;
 
 pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("5Y6HMSgNYbkcBiQCukYvTK56aQarSpq1Nk9aiSsjws2o");
-
-// Two parties — a maker and a taker — can swap tokens without trusting each other or a third party.
-// The maker deposits token A into a program-controlled vault and specifies how much of token B they want in return.
-// Any taker who holds token B can complete the swap atomically. If no taker appears, the maker can reclaim their tokens at any time.
-
-// Maker deposits token A  →  vault (PDA-owned)
-//                                       ↓  taker sends token B to maker
-//                                       ↓  vault releases token A to taker
-//                                       ↓  escrow + vault accounts closed, rent returned
+declare_id!("5t2YrH4VCvpmVsSBuqPS2rCEAGTreDNhbvXX2gRGud9g");
 
 #[program]
 pub mod escrowq32026 {
@@ -37,11 +27,19 @@ pub mod escrowq32026 {
         ctx.accounts.deposit(deposit)
     }
 
-    //take instruction
-    //TODO:
+    #[instruction(discriminator = 1)]
+    pub fn take(ctx: Context<Take>) -> Result<()> {
+        ctx.accounts.deposit()?;
+        ctx.accounts.withdraw_and_close_vault()
+    }
 
     #[instruction(discriminator = 2)]
     pub fn refund(ctx: Context<Refund>) -> Result<()> {
         ctx.accounts.refund_and_close_vault()
+    }
+
+    #[instruction(discriminator = 3)]
+    pub fn update(ctx: Context<Update>, receive: u64) -> Result<()> {
+        ctx.accounts.update(receive)
     }
 }
