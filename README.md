@@ -127,8 +127,6 @@ Tests run with LiteSVM (no local validator needed).
 
 ![All tests passing](./week2_escrow_tests_success.png)
 
-```
-```
 
 ## Notes
 
